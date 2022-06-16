@@ -1,0 +1,9 @@
+Naming/MethodParameterName:
+  Description: Checks for method parameter names that contain capital letters, end in
+    numbers, or do not meet a minimal length.
+  Enabled: true
+  MinNameLength: 3
+  AllowedNames:
+  - x
+  - y
+  ForbiddenNames: []
