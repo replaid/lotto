@@ -23,6 +23,10 @@ class Board
     @columns[x]
   end
 
+  def columns
+    @columns.dup
+  end
+
   def rows
     (0..4).map { |i| row(i) }
   end
