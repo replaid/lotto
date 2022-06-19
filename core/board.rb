@@ -7,6 +7,7 @@ class Board
   end
 
   def []=(x, y, value)
+    raise "already have a value at #{[x, y]}" if self[x, y]
     @columns[x][y] = value
   end
 
