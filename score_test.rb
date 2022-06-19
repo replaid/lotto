@@ -2,6 +2,7 @@
 
 require 'minitest/autorun'
 require_relative 'score'
+require_relative 'board'
 
 class ScoreTest < Minitest::Test
   def setup
@@ -26,7 +27,7 @@ class ScoreTest < Minitest::Test
       [nil, nil, nil, 1, 1],
       [nil, nil, 2, 1, 1],
       [nil, 3, 2, 1, 1],
-      [4, 3, 2, 1, 1],
+      [4, 3, 2, 1, 1]
     ].each do |line|
       assert_equal(10, @score.score_line(line))
     end
@@ -40,6 +41,7 @@ class ScoreTest < Minitest::Test
       assert_equal(20, @score.score_line(line))
     end
   end
+
   def test_can_score_triplet
     [
       [nil, nil, 1, 1, 1],
@@ -60,11 +62,33 @@ class ScoreTest < Minitest::Test
   end
 
   def test_can_score_full_house
-    assert_equal(40, @score.score_line([1,1,1,2,2]))
+    assert_equal(40, @score.score_line([1, 1, 1, 2, 2]))
   end
 
   def test_can_score_sequence
-    assert_equal(25, @score.score_line([1,2,3,4,5]))
-    assert_equal(0, @score.score_line([1,2,3,4,12]))
+    assert_equal(25, @score.score_line([1, 2, 3, 4, 5]))
+    assert_equal(0, @score.score_line([1, 2, 3, 4, 12]))
+  end
+
+  def test_can_return_total_score
+    board = Board.new
+    columns = [
+      [1, 2, 3, 4, 5],
+      [1, 2, 3, 4, 5],
+      [1, 2, 3, 4, 5],
+      [1, 2, 3, 4, 5],
+      [6, 7, 8, 9, 10]
+    ]
+    columns.each_with_index do |column, x|
+      column.each_with_index do |value, y|
+        board[x, y] = value
+      end
+    end
+    assert_equal(375, @score.score_total(board))
+  end
+
+  def test_can_return_total_score_for_empty_board
+    board = Board.new
+    assert_equal(0, @score.score_total(board))
   end
 end

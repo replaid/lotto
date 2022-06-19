@@ -58,4 +58,13 @@ class Score
     sorted = line.compact.sort
     (sorted.first.to_i + 4) == sorted.last
   end
+
+  def score_total(board)
+    scores = board.all_lines.map do |line| score_line(line) end
+    scores.sum
+
+  end
+
 end
+
+
