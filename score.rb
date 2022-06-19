@@ -14,7 +14,21 @@ class Score
 
   QUARTET = {4=>1}
 
+  SCORES = {
+    empty: 0,
+    one_pair: 10,
+    two_pairs: 20,
+    sequence: 25,
+    triplet: 30,
+    full_house: 40,
+    quartet: 50
+  }
+
   def score_line(line)
+    SCORES[score_type(line)]
+  end
+
+  def score_type(line)
     # Eliminate nils, then count occurrences of each value.
     tally = line.compact.tally
 
@@ -35,20 +49,20 @@ class Score
       # Then once we know we have 5 singles, we can just check that they span 5
       # consecutive integers to see if we have a sequence or not.
       if (tally_tally == MAYBE_SEQUENCE) && is_sequence?(line)
-        25
+        :sequence
       else
-        0
+        :empty
       end
     when ONE_PAIR
-      10
+      :one_pair
     when TWO_PAIRS
-      20
+      :two_pairs
     when TRIPLET
-      30
+      :triplet
     when QUARTET
-      50
+      :quartet
     when FULL_HOUSE
-      40
+      :full_house
     else
       raise 'unrecognized case: ' + tally_tally.inspect
     end
