@@ -29,4 +29,34 @@ class BoardTest < Minitest::Test
     board[4, 0] = 5
     assert_equal([1, 2, 3, 4, 5], board.row(0))
   end
+  def test_can_report_all_lines
+    input_columns = [
+      [1, 2, 3, 4, 5],
+      [1, 2, 3, 4, 5],
+      [1, 2, 3, 4, 5],
+      [1, 2, 3, 4, 5],
+      [6, 7, 8, 9, 10]
+    ]
+    board = Board.new
+    input_columns.each_with_index do |column, x|
+      column.each_with_index do |value, y|
+        board[x, y] = value
+      end
+    end
+    columns_then_rows = [
+      [1, 2, 3, 4, 5],
+      [1, 2, 3, 4, 5],
+      [1, 2, 3, 4, 5],
+      [1, 2, 3, 4, 5],
+      [6, 7, 8, 9, 10],
+      [ 1, 1, 1, 1, 6 ],
+      [ 2, 2, 2, 2, 7 ],
+      [ 3, 3, 3, 3, 8 ],
+      [ 4, 4, 4, 4, 9 ],
+      [ 5, 5, 5, 5, 10 ]
+    ]
+    assert_equal(columns_then_rows, board.all_lines)
+   
+
+  end
 end

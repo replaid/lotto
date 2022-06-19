@@ -21,4 +21,12 @@ class Board
   def column(x)
     @columns[x]
   end
+
+  def rows
+    (0..4).map { |i| row(i) }
+  end
+
+  def all_lines
+    @columns + rows
+  end
 end
