@@ -11,6 +11,9 @@ class NaiveScoreStrategy
     end
     grouped_scores = scored_things.group_by {|x,y,new_score| new_score}
     high_score = grouped_scores.keys.sort.last
-    grouped_scores[high_score].first.first(2)
+    high_scoring_spaces = grouped_scores[high_score].map {|x,y,_score| [x,y] }
+    lonelinesses = high_scoring_spaces.map { |x,y| [x,y,board.loneliness(x,y)]}
+    max_loneliness = lonelinesses.map(&:last).max
+    lonelinesses.detect {|x,y,loneliness| loneliness == max_loneliness}.first(2)
   end
 end

@@ -28,7 +28,7 @@ class NaiveScoreStrategyTest < Minitest::Test
     )
   end
 
-  def test_two_spins
+  def test_two_spins_of_same
     assert_equal(
       [
         [1, 1, nil, nil, nil],
@@ -41,12 +41,25 @@ class NaiveScoreStrategyTest < Minitest::Test
     )
   end
 
+  def test_two_spins_of_different
+    assert_equal(
+      [
+        [1, nil, nil, nil, nil],
+        [nil, 12, nil, nil, nil],
+        [nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil]
+      ],
+      run_array([1, 12]).rows
+    )
+  end
+
   def test_six_spins_pair_detection
     assert_equal(
       [
-        [1, 1, 1, 1, 2],
+        [1, 1, 1, 1, nil],
         [nil, nil, nil, nil, 2],
-        [nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, 2],
         [nil, nil, nil, nil, nil],
         [nil, nil, nil, nil, nil]
       ],
