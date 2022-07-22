@@ -68,4 +68,12 @@ class BoardTest < Minitest::Test
     assert_equal([1, 0], all_empties.first)
     assert_equal([4, 4], all_empties.last)
   end
+
+  def test_dup_dupes_columns_too
+    board = Board.new
+    duplicated_board = board.dup
+    assert_nil(board[4,4])
+    duplicated_board[4,4] = 1
+    assert_nil(board[4,4])
+  end
 end

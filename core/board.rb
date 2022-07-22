@@ -6,6 +6,14 @@ class Board
     @columns = Array.new(5) { |_index| [nil, nil, nil, nil, nil] }
   end
 
+  def dup
+    result = self.class.new
+    each_space do |x,y|
+      result[x,y] = self[x,y]
+    end
+    result
+  end
+
   def []=(x, y, value)
     raise "already have a value at #{[x, y]}" if self[x, y]
     @columns[x][y] = value
