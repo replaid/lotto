@@ -29,6 +29,7 @@ class BoardTest < Minitest::Test
     board[4, 0] = 5
     assert_equal([1, 2, 3, 4, 5], board.row(0))
   end
+
   def test_can_report_all_lines
     input_columns = [
       [1, 2, 3, 4, 5],
@@ -56,7 +57,7 @@ class BoardTest < Minitest::Test
       [ 5, 5, 5, 5, 10 ]
     ]
     assert_equal(columns_then_rows, board.all_lines)
-   
+  end
 
   end
 end
