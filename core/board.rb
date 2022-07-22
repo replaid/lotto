@@ -34,4 +34,14 @@ class Board
   def all_lines
     @columns + rows
   end
+
+  def all_empty_spaces
+    empty_spaces = []
+    (0..4).each do |y|
+      (0..4).each do |x|
+        empty_spaces << [x,y] unless self[x,y]
+      end
+    end
+    empty_spaces
+  end
 end
