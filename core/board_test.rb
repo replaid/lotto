@@ -66,6 +66,7 @@ class BoardTest < Minitest::Test
     all_empties = board.all_empty_spaces
     assert_equal(23, all_empties.size)
     assert_equal([1, 0], all_empties.first)
+    assert_equal([2, 0], all_empties[1])
     assert_equal([4, 4], all_empties.last)
   end
 
