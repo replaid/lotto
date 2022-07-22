@@ -59,6 +59,10 @@ class Board
     empty_spaces
   end
 
+  def loneliness(x, y)
+    column(x).count(nil) + row(y).count(nil)
+  end
+
   PIPE = '|'
   ROW_DECORATOR = '+--+--+--+--+--+'
   def inspect
