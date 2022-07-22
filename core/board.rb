@@ -35,12 +35,18 @@ class Board
     @columns + rows
   end
 
-  def all_empty_spaces
-    empty_spaces = []
+  def each_space
     (0..4).each do |y|
       (0..4).each do |x|
-        empty_spaces << [x,y] unless self[x,y]
+        yield x, y
       end
+    end
+  end
+
+  def all_empty_spaces
+    empty_spaces = []
+    each_space do |x, y|
+      empty_spaces << [x,y] unless self[x,y]
     end
     empty_spaces
   end
