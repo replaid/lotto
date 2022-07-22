@@ -76,4 +76,24 @@ class BoardTest < Minitest::Test
     duplicated_board[4,4] = 1
     assert_nil(board[4,4])
   end
+
+  def test_inspect
+    expected = <<~EOS
+      +--+--+--+--+--+
+      |  | 1|12|  |  |
+      +--+--+--+--+--+
+      |  |  |  |  |  |
+      +--+--+--+--+--+
+      |  |  |  |  |  |
+      +--+--+--+--+--+
+      |  |  |  |  |  |
+      +--+--+--+--+--+
+      |  |  |  |  |  |
+      +--+--+--+--+--+
+    EOS
+    board = Board.new
+    board[1,0] = 1
+    board[2,0] = 12
+    assert_equal(expected, board.inspect)
+  end
 end

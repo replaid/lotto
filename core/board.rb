@@ -58,4 +58,27 @@ class Board
     end
     empty_spaces
   end
+
+  PIPE = '|'
+  ROW_DECORATOR = '+--+--+--+--+--+'
+  def inspect
+    [
+      ROW_DECORATOR,
+      rows.map do |row|
+        [
+          PIPE,
+          row.map do |value|
+            if value
+              sprintf('%2d', value)
+            else
+              '  '
+            end
+          end.join(PIPE),
+          PIPE
+        ].join
+      end.join("\n#{ROW_DECORATOR}\n"),
+      ROW_DECORATOR,
+      ''
+    ].join("\n")
+  end
 end
