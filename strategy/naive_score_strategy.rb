@@ -17,6 +17,15 @@ class Tools
     high_score = grouped_scores.keys.sort.last
     grouped_scores[high_score].map {|x,y,_score| [x,y] }
   end
+
+  def loneliest(spaces)
+    lonelinesses = spaces.map do |x,y|
+      [x,y,@board.loneliness(x,y)]
+    end
+    max_loneliness = lonelinesses.map(&:last).max
+    all_with_max_loneliness = lonelinesses.find_all {|x,y,loneliness| loneliness == max_loneliness}
+    all_with_max_loneliness.map {|x,y,_loneliness| [x,y]}
+  end
 end
 
 class NaiveScoreStrategy
@@ -33,16 +42,7 @@ class NaiveScoreStrategy
   def place(board, new_number)
     tools = Tools.new(board)
     candidates = tools.high_scoring_spaces(new_number)
-    all_loneliest_spaces = loneliest(board, candidates)
+    all_loneliest_spaces = tools.loneliest(candidates)
     all_loneliest_spaces.first
-  end
-
-  def loneliest(board, spaces)
-    lonelinesses = spaces.map do |x,y|
-      [x,y,board.loneliness(x,y)]
-    end
-    max_loneliness = lonelinesses.map(&:last).max
-    all_with_max_loneliness = lonelinesses.find_all {|x,y,loneliness| loneliness == max_loneliness}
-    all_with_max_loneliness.map {|x,y,_loneliness| [x,y]}
   end
 end
