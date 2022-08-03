@@ -1,5 +1,24 @@
 require_relative '../core/score'
 
+class Tools
+  def initialize(board)
+    @board = board
+  end
+
+  def high_scoring_spaces(new_number)
+    score = Score.new
+    scored_things = @board.all_empty_spaces.map do |x, y|
+      new_board = @board.dup
+      new_board[x,y] = new_number
+      new_score = score.score_total(new_board)
+      [x, y, new_score]
+    end
+    grouped_scores = scored_things.group_by {|x,y,new_score| new_score}
+    high_score = grouped_scores.keys.sort.last
+    grouped_scores[high_score].map {|x,y,_score| [x,y] }
+  end
+end
+
 class NaiveScoreStrategy
   # * Get empty spaces.
   #
@@ -12,22 +31,10 @@ class NaiveScoreStrategy
   #   so we can maximize distribution, and grab one of the spaces that shares
   #   the highest loneliness score.
   def place(board, new_number)
-    candidates = high_scoring_spaces(board, new_number)
+    tools = Tools.new(board)
+    candidates = tools.high_scoring_spaces(new_number)
     all_loneliest_spaces = loneliest(board, candidates)
     all_loneliest_spaces.first
-  end
-
-  def high_scoring_spaces(board, new_number)
-    score = Score.new
-    scored_things = board.all_empty_spaces.map do |x, y|
-      new_board = board.dup
-      new_board[x,y] = new_number
-      new_score = score.score_total(new_board)
-      [x, y, new_score]
-    end
-    grouped_scores = scored_things.group_by {|x,y,new_score| new_score}
-    high_score = grouped_scores.keys.sort.last
-    grouped_scores[high_score].map {|x,y,_score| [x,y] }
   end
 
   def loneliest(board, spaces)
