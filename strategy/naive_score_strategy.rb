@@ -12,7 +12,8 @@ class NaiveScoreStrategy
   #   so we can maximize distribution, and grab one of the spaces that shares
   #   the highest loneliness score.
   def place(board, new_number)
-    loneliest(board, high_scoring_spaces(board, new_number))
+    all_loneliest_spaces = loneliest(board, high_scoring_spaces(board, new_number))
+    all_loneliest_spaces.first
   end
 
   def high_scoring_spaces(board, new_number)
@@ -33,6 +34,7 @@ class NaiveScoreStrategy
       [x,y,board.loneliness(x,y)]
     end
     max_loneliness = lonelinesses.map(&:last).max
-    lonelinesses.detect {|x,y,loneliness| loneliness == max_loneliness}.first(2)
+    all_with_max_loneliness = lonelinesses.find_all {|x,y,loneliness| loneliness == max_loneliness}
+    all_with_max_loneliness.map {|x,y,_loneliness| [x,y]}
   end
 end
