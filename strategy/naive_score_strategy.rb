@@ -1,6 +1,16 @@
 require_relative '../core/score'
 
 class NaiveScoreStrategy
+  # * Get empty spaces.
+  #
+  # * Score every empty space.
+  #
+  # * Narrow down to the empty spaces that share the highest score on this
+  #   move.
+  #
+  # * Find loneliest spaces (fewest numbers placed in the same column or row)
+  #   so we can maximize distribution, and grab one of the spaces that shares
+  #   the highest loneliness score.
   def place(board, new_number)
     score = Score.new
     scored_things = board.all_empty_spaces.map do |x, y|
